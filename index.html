@@ -9,11 +9,31 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     font-family: 'Gowun Dodum', sans-serif;
-    background: #fdf8ed;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,200,140,0.18) 0%, transparent 30%),
+      radial-gradient(circle at 88% 14%, rgba(245,200,192,0.18) 0%, transparent 30%),
+      radial-gradient(circle at 78% 88%, rgba(184,216,168,0.16) 0%, transparent 35%),
+      #fdf8ed;
     color: #3a2820;
     line-height: 1.65;
     min-height: 100vh;
+    position: relative;
   }
+  /* 떠다니는 작은 점 (한 번에 너무 많지 않게) */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 8% 28%, #ffc4a0, transparent),
+      radial-gradient(2px 2px at 22% 68%, #c4e4d4, transparent),
+      radial-gradient(2px 2px at 70% 22%, #f5d579, transparent),
+      radial-gradient(2px 2px at 88% 70%, #ffc4dc, transparent),
+      radial-gradient(2px 2px at 50% 88%, #f5d579, transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container { position: relative; z-index: 1; }
 
   .container {
     max-width: 980px;
@@ -38,23 +58,25 @@
   }
   header h1 {
     font-family: 'Jua', sans-serif;
-    font-size: 2.4rem;
+    font-size: 2.5rem;
     color: #3a2818;
     margin-bottom: 8px;
     letter-spacing: 2px;
   }
+  header h1 .emoji-side {
+    display: inline-block;
+    font-size: 1.4rem;
+    vertical-align: middle;
+    margin: 0 12px;
+    transform: translateY(-3px);
+  }
+  header h1 .emoji-side.left  { animation: bobLeft  3s ease-in-out infinite; }
+  header h1 .emoji-side.right { animation: bobRight 3s ease-in-out infinite; }
+  @keyframes bobLeft  { 0%,100% { transform: translateY(-3px) rotate(-6deg);} 50% { transform: translateY(-7px) rotate(-12deg);} }
+  @keyframes bobRight { 0%,100% { transform: translateY(-3px) rotate(6deg);}  50% { transform: translateY(-7px) rotate(12deg);}  }
   header .subtitle {
     font-size: 0.95rem;
-    color: #886532;
-  }
-  header .author {
-    margin-top: 12px;
-    font-size: 0.85rem;
-    color: #a8907a;
-  }
-  header .author b {
-    color: #6a4828;
-    font-weight: 600;
+    color: #b85838;
   }
 
   /* ===== 두 줄 안내 ===== */
@@ -87,6 +109,15 @@
   }
   .info-card p + p { margin-top: 4px; }
   .info-card.notice p b { color: #b85838; font-weight: 600; }
+  .info-card.notice p em {
+    font-style: normal;
+    color: #d8703a;
+    background: #fff2e0;
+    padding: 1px 7px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
 
   .info-card.howto ul {
     list-style: none;
@@ -111,12 +142,19 @@
   /* ===== 시리즈 ===== */
   .series-section h2 {
     font-family: 'Jua', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #6a4828;
     margin-bottom: 18px;
     letter-spacing: 3px;
-    padding-left: 4px;
+    padding-left: 10px;
     border-left: 3px solid #d4a548;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .series-section h2 .dot {
+    color: #f5b8b0;
+    font-size: 0.9rem;
   }
 
   .series-grid {
@@ -298,6 +336,21 @@
     padding: 2px 9px;
     font-size: 0.72rem;
   }
+  .card-body .tag.pink {
+    background: #ffe4ec;
+    color: #b85878;
+    border-color: #f5b8c4;
+  }
+  .card-body .tag.green {
+    background: #e8f3dc;
+    color: #5a7a3a;
+    border-color: #b8d8a8;
+  }
+  .card-body .tag.blue {
+    background: #e0eef5;
+    color: #3a6878;
+    border-color: #a8c8d8;
+  }
 
   .card-body .play-btn {
     display: block;
@@ -331,11 +384,20 @@
   footer {
     text-align: center;
     margin-top: 50px;
-    padding: 22px 20px;
-    border-top: 1px solid #ebd9b8;
-    font-size: 0.78rem;
+    padding: 26px 20px;
+    border-top: 1px dashed #ebd9b8;
+    font-size: 0.82rem;
     color: #a8907a;
     line-height: 1.7;
+  }
+  footer .heart {
+    color: #d8703a;
+    display: inline-block;
+    animation: bounce 1.6s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
   }
 
   @media (max-width: 640px) {
@@ -351,23 +413,20 @@
 
 <header>
   <div class="label">A R T   E S C A P E</div>
-  <h1>미술 방탈출 시리즈</h1>
-  <div class="subtitle">작품 속으로 들어가는 시간</div>
-  <div class="author">
-    by <b>혜화여자고등학교 미술과</b>
-  </div>
+  <h1><span class="emoji-side left">🎨</span>미술 방탈출 시리즈<span class="emoji-side right">🗝️</span></h1>
+  <div class="subtitle">~ 작품 속으로 들어가는 시간 ~</div>
 </header>
 
 <!-- ===== 안내 + 게임방법 한 줄 ===== -->
 <div class="info-row">
   <div class="info-card notice">
-    <h3>선생님들께</h3>
+    <h3>📌 선생님들께</h3>
     <p>학생들과 작가·작품을 한 번 더 들여다보기 위한 점앤클릭 웹 게임입니다.</p>
-    <p>현재 모든 시각 요소는 <b>CSS 더미 일러스트</b>로 그려져 있고, 이후 일러스트 이미지로 교체될 예정입니다.</p>
+    <p>현재 모든 시각 요소는 <b>CSS 더미 일러스트</b>로 그려져 있고 <em>(임시 이미지라서 안예뻐요!)</em> 이후 일러스트 이미지로 교체될 예정입니다 🖌️</p>
   </div>
 
   <div class="info-card howto">
-    <h3>플레이 방법</h3>
+    <h3>🎮 플레이 방법</h3>
     <ul>
       <li><span class="k">클릭</span><span>사물을 살펴보고 단서 찾기</span></li>
       <li><span class="k">← →</span><span>시점 좌우 회전</span></li>
@@ -380,7 +439,7 @@
 
 <!-- ===== 시리즈 ===== -->
 <section class="series-section">
-  <h2>시리즈</h2>
+  <h2>시리즈 <span class="dot">✿</span></h2>
 
   <div class="series-grid">
 
@@ -395,11 +454,11 @@
         <div class="subname">The Room in Arles</div>
         <p class="desc">1888년 프랑스 아를. 빈센트가 동생에게 보내려 했던 미완성의 편지를 대신 완성하고 노란 방을 떠나야 한다.</p>
         <div class="tags">
-          <span class="tag">고흐</span>
-          <span class="tag">3-뷰</span>
-          <span class="tag">엔딩 4분기</span>
+          <span class="tag">🌻 고흐</span>
+          <span class="tag green">3-뷰</span>
+          <span class="tag pink">엔딩 4분기</span>
         </div>
-        <a href="https://miynuees.github.io/arles-room/" class="play-btn" target="_blank">플레이</a>
+        <a href="https://miynuees.github.io/arles-room/" class="play-btn" target="_blank">▶ 플레이</a>
         <a href="https://miynuees.github.io/arles-room/image_guide.html" class="play-btn guide" target="_blank">이미지 가이드</a>
       </div>
     </article>
@@ -416,11 +475,11 @@
         <div class="subname">안평·안견·박팽년의 꿈</div>
         <p class="desc">계유의 화가 지나간 뒤, 안평대군의 별당. 안견이 사흘 만에 그렸다는 「몽유도원도」가 아직 그 안에 있다.</p>
         <div class="tags">
-          <span class="tag">안견·안평</span>
-          <span class="tag">2 챕터·6 뷰</span>
-          <span class="tag">엔딩 4분기</span>
+          <span class="tag">🍑 안견·안평</span>
+          <span class="tag blue">2 챕터·6 뷰</span>
+          <span class="tag pink">엔딩 4분기</span>
         </div>
-        <a href="https://miynuees.github.io/bihaedang/" class="play-btn" target="_blank">플레이</a>
+        <a href="https://miynuees.github.io/bihaedang/" class="play-btn" target="_blank">▶ 플레이</a>
         <a href="https://miynuees.github.io/bihaedang/image_guide.html" class="play-btn guide" target="_blank">이미지 가이드</a>
       </div>
     </article>
@@ -436,9 +495,9 @@
         <div class="subname">기획 중</div>
         <p class="desc">베르메르의 화실, 클림트의 키스, 마그리트의 방… 다음 편 작가·작품을 함께 고민하고 있어요.</p>
         <div class="tags">
-          <span class="tag">기획 중</span>
+          <span class="tag">🤔 기획 중</span>
         </div>
-        <a href="#" class="play-btn disabled">준비 중</a>
+        <a href="#" class="play-btn disabled">곧 만나요</a>
       </div>
     </article>
 
@@ -446,8 +505,7 @@
 </section>
 
 <footer>
-  미술 방탈출 시리즈 · 혜화여자고등학교 미술과<br>
-  학생들이 작품 앞에서 한 번 더 멈춰 서기를 바라며
+  <span class="heart">♥</span> 학생들이 작품 앞에서 한 번 더 멈춰 서기를 바라며 <span class="heart">♥</span>
 </footer>
 
 </div>
