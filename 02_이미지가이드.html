@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이미지 제작 가이드 — 아를의 방</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Gowun Dodum', sans-serif;
+    background: #f5e9c8;
+    color: #3a2820;
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ===== 헤더 ===== */
+  header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f5d579 0%, #d4a548 100%);
+    border-radius: 8px;
+    border: 2px solid #5a3818;
+    box-shadow: 0 4px 20px rgba(90,56,24,0.2);
+  }
+  header h1 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: #3a2820;
+    margin-bottom: 8px;
+  }
+  header .sub {
+    font-size: 0.95rem;
+    color: #5a3818;
+  }
+  header .total {
+    margin-top: 16px;
+    display: inline-block;
+    background: #5a3818;
+    color: #f5e9c8;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  /* ===== 섹션 ===== */
+  section {
+    margin-bottom: 50px;
+  }
+  section h2 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.4rem;
+    color: #5a3818;
+    margin-bottom: 6px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #c8a878;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  section h2 .badge {
+    background: #c8552d;
+    color: #fff8d8;
+    padding: 3px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-family: 'Gowun Dodum', sans-serif;
+  }
+  section h2 .badge.tier-1 { background: #c8552d; }
+  section h2 .badge.tier-2 { background: #d48538; }
+  section h2 .badge.tier-3 { background: #6a8848; }
+  section h2 .badge.tier-4 { background: #4a6878; }
+  section .desc {
+    font-size: 0.85rem;
+    color: #6a4828;
+    margin-bottom: 20px;
+    margin-top: 4px;
+  }
+
+  /* ===== 카드 그리드 ===== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: #fff8e8;
+    border: 1.5px solid #c8a878;
+    border-radius: 6px;
+    padding: 16px;
+    transition: all 0.2s;
+  }
+  .card:hover {
+    border-color: #5a3818;
+    box-shadow: 0 4px 14px rgba(90,56,24,0.15);
+    transform: translateY(-2px);
+  }
+  .card .sample-area {
+    width: 100%;
+    height: 140px;
+    background: #ebe0c8;
+    border: 1px dashed #b8986c;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .card h3 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1rem;
+    color: #3a2820;
+    margin-bottom: 6px;
+  }
+  .card .filename {
+    display: inline-block;
+    background: #3a2820;
+    color: #f5d579;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+  .card .meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .card .tag {
+    background: #ebe0c8;
+    color: #5a3818;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    border: 1px solid #c8a878;
+  }
+  .card .tag.transparent { background: #d8e8d8; border-color: #88a888; color: #3a5828; }
+  .card .tag.solid { background: #e8d8d8; border-color: #a88888; color: #5a3828; }
+  .card .note {
+    font-size: 0.82rem;
+    color: #5a3818;
+    line-height: 1.5;
+  }
+
+  /* ===== 샘플 시각화 ===== */
+  /* 배경 샘플 */
+  .s-bg {
+    width: 90%; height: 90%;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.2);
+  }
+  .s-bg-front { background: linear-gradient(180deg, #f5d579 0%, #f5d579 60%, #c4928a 60%, #b07d75 100%); }
+  .s-bg-right { background: linear-gradient(180deg, #e8c668 0%, #e8c668 60%, #b88278 60%, #a47068 100%); }
+  .s-bg-left  { background: linear-gradient(180deg, #e0bc60 0%, #e0bc60 60%, #a87268 60%, #946058 100%); }
+
+  /* 침대 */
+  .s-bed {
+    width: 110px; height: 70px;
+    background: linear-gradient(180deg, #c8553d 0%, #a8442d 50%, #8a3520 100%);
+    border: 2px solid #5a2818;
+    border-radius: 3px;
+    position: relative;
+  }
+  .s-bed::before {
+    content: '';
+    position: absolute;
+    top: 8%; left: 5%; right: 5%;
+    height: 30%;
+    background: linear-gradient(180deg, #f5e9c8, #e8dcb5);
+    border-radius: 50% 50% 10% 10%;
+  }
+  .s-bed::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, #d4a574, #b08552);
+  }
+
+  /* 창문 */
+  .s-window {
+    width: 70px; height: 70px;
+    background: linear-gradient(180deg, #2a4868 0%, #1a2848 100%);
+    border: 4px solid #f5e9c8;
+    position: relative;
+  }
+  .s-window::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 2px; background: #f5e9c8; transform: translateX(-50%);
+  }
+  .s-window::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 2px; background: #f5e9c8; transform: translateY(-50%);
+  }
+
+  /* 탁자 */
+  .s-table {
+    width: 110px; height: 60px;
+    background: linear-gradient(180deg, #d4a574, #a87842);
+    border: 2px solid #5a3818;
+    position: relative;
+  }
+  .s-table::before {
+    content: '';
+    position: absolute;
+    top: 18%; left: 18%;
+    width: 30%; height: 28%;
+    background: #f5e9c8;
+    border: 1px solid #8a6532;
+    transform: rotate(-3deg);
+  }
+  .s-table::after {
+    content: '';
+    position: absolute;
+    top: 25%; right: 22%;
+    width: 10%; height: 25%;
+    background: #1a1810;
+    border-radius: 30% 30% 10% 10%;
+  }
+
+  /* 의자 */
+  .s-chair {
+    width: 50px; height: 95px;
+    background: linear-gradient(180deg, #b08552, #8a6532);
+    border: 2px solid #5a3818;
+    margin-top: 10px;
+    position: relative;
+  }
+  .s-chair::before {
+    content: '';
+    position: absolute;
+    top: -22px; left: 5%; right: 5%;
+    height: 30px;
+    background: #8a6532;
+    border: 2px solid #5a3818;
+  }
+  .s-chair-dark {
+    background: linear-gradient(180deg, #6a4828, #4a3018);
+  }
+  .s-chair-dark::before { background: #4a3018; }
+
+  /* 거울 */
+  .s-mirror {
+    width: 70px; height: 95px;
+    background: linear-gradient(180deg, #c8d8e8 0%, #a8b8c8 100%);
+    border: 5px solid #5a3818;
+    border-radius: 50%;
+  }
+
+  /* 옷걸이 */
+  .s-coatrack {
+    width: 70px; height: 130px;
+    position: relative;
+  }
+  .s-coatrack::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0;
+    width: 4px; height: 100%;
+    background: #5a3818;
+    transform: translateX(-50%);
+  }
+  .s-coatrack::after {
+    content: '';
+    position: absolute;
+    top: 5%; left: 0; right: 0;
+    height: 18px;
+    border: 3px solid #5a3818;
+    border-bottom: none;
+    border-radius: 50% 50% 0 0;
+  }
+  .s-coatrack .coat {
+    position: absolute;
+    top: 28%; left: 50%;
+    transform: translateX(-50%);
+    width: 70%; height: 60%;
+    background: linear-gradient(180deg, #3a4858 0%, #2a3848 100%);
+    clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  }
+
+  /* 문 */
+  .s-door {
+    width: 70px; height: 130px;
+    background: linear-gradient(180deg, #6a4828 0%, #4a3018 100%);
+    border: 3px solid #2a1808;
+    position: relative;
+  }
+  .s-door::before {
+    content: '●';
+    position: absolute;
+    left: 12%; top: 50%;
+    color: #f5d579;
+    font-size: 0.9rem;
+  }
+  .s-door::after {
+    content: '';
+    position: absolute;
+    inset: 10% 22% 50% 22%;
+    border: 2px solid #2a1808;
+    background: rgba(0,0,0,0.1);
+  }
+
+  /* 그림 - 자화상 */
+  .s-portrait {
+    width: 75px; height: 105px;
+    background: linear-gradient(180deg, #c4928a 0%, #c4928a 40%, #d4a574 40%, #b08552 100%);
+    border: 3px solid #5a3818;
+    position: relative;
+  }
+  .s-portrait::before {
+    content: '';
+    position: absolute;
+    top: 30%; left: 30%;
+    width: 40%; height: 35%;
+    background: #f5d8b5;
+    border-radius: 50%;
+  }
+  .s-portrait::after {
+    content: '';
+    position: absolute;
+    top: 38%; right: 25%;
+    width: 14%; height: 12%;
+    background: #f5e9c8;
+    border-radius: 50%;
+  }
+
+  /* 해바라기 */
+  .s-sunflowers {
+    width: 90px; height: 100px;
+    background: linear-gradient(180deg, #d4a548 0%, #b88838 100%);
+    border: 3px solid #5a3818;
+    position: relative;
+  }
+  .s-sunflowers::before {
+    content: '✿ ✿ ✿';
+    position: absolute;
+    top: 18%; left: 0; right: 0;
+    text-align: center;
+    color: #f5d579;
+    font-size: 1.1rem;
+  }
+  .s-sunflowers::after {
+    content: '';
+    position: absolute;
+    bottom: 10%; left: 50%;
+    transform: translateX(-50%);
+    width: 60%; height: 30%;
+    background: linear-gradient(180deg, #6a5828, #4a3818);
+    border-radius: 30% 30% 5% 5%;
+  }
+
+  /* 풍경화 */
+  .s-landscape {
+    width: 90px; height: 100px;
+    background: linear-gradient(180deg, #5a7898 0%, #d4a548 50%, #b88838 100%);
+    border: 3px solid #5a3818;
+    position: relative;
+  }
+  .s-landscape::after {
+    content: '∨';
+    position: absolute;
+    top: 22%; right: 22%;
+    color: #1a1410;
+    font-size: 0.8rem;
+  }
+
+  /* 신발 */
+  .s-shoes {
+    width: 100px; height: 100px;
+    background: linear-gradient(180deg, #8a6838 0%, #6a4828 100%);
+    border: 4px solid #5a3818;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    filter: brightness(0.9);
+  }
+
+  /* 신발 한 짝 (인벤토리·침대·그림 아래 모두 재활용) */
+  .s-single-shoe {
+    width: 80px; height: 36px;
+    position: relative;
+    transform: rotate(-12deg);
+  }
+  .s-single-shoe::before {
+    /* 신발 몸통 */
+    content: '';
+    position: absolute;
+    inset: 30% 0 0 0;
+    background: linear-gradient(180deg, #8a5a30 0%, #4a2810 100%);
+    border: 1.5px solid #2a1408;
+    border-radius: 40% 60% 40% 40% / 60% 80% 30% 30%;
+  }
+  .s-single-shoe::after {
+    /* 끈 자국 */
+    content: '';
+    position: absolute;
+    top: 30%; left: 40%; right: 30%;
+    height: 30%;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0, transparent 4px,
+        rgba(245,220,180,0.35) 4px, rgba(245,220,180,0.35) 5px);
+  }
+
+  /* 별이 빛나는 밤 */
+  .s-starry {
+    width: 110px; height: 90px;
+    background: linear-gradient(180deg, #1a2848 0%, #2a4868 50%, #3a5878 100%);
+    border: 2px solid #5a3818;
+    position: relative;
+  }
+  .s-starry::before {
+    content: '';
+    position: absolute;
+    top: 12%; right: 18%;
+    width: 14px; height: 14px;
+    background: radial-gradient(circle at 35% 35%, #fff8d8, #f5d579 70%, transparent 80%);
+    border-radius: 50%;
+  }
+  .s-starry::after {
+    content: '· · ·  · ·';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    text-align: center;
+    color: #fff8d8;
+    font-size: 1rem;
+    letter-spacing: 4px;
+  }
+
+  /* 까마귀 나는 밀밭 */
+  .s-wheatfield {
+    width: 130px; height: 90px;
+    background: linear-gradient(180deg, #d4a548 0%, #c89538 35%, #2a3a5a 100%);
+    position: relative;
+    border: 1px solid #5a3818;
+  }
+  .s-wheatfield::after {
+    content: '∨ ∨ ∨';
+    position: absolute;
+    top: 30%; left: 0; right: 0;
+    text-align: center;
+    color: #1a1410;
+    font-size: 0.85rem;
+    letter-spacing: 6px;
+  }
+
+  /* ===== 파일명 섹션 ===== */
+  .filenames-box {
+    background: #3a2820;
+    color: #f5d579;
+    border-radius: 6px;
+    padding: 20px 28px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.88rem;
+    line-height: 1.9;
+    overflow-x: auto;
+  }
+  .filenames-box .comment { color: #c8a878; }
+  .filenames-box .num { color: #b8a868; margin-right: 12px; display: inline-block; width: 30px; }
+
+  /* ===== 프롬프트 박스 ===== */
+  .prompt-box {
+    background: #fff8e8;
+    border-left: 4px solid #c8552d;
+    padding: 18px 22px;
+    margin-top: 20px;
+    border-radius: 0 6px 6px 0;
+  }
+  .prompt-box h3 {
+    font-family: 'Nanum Myeongjo', serif;
+    color: #5a3818;
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+  }
+  .prompt-box p { font-size: 0.9rem; margin-bottom: 8px; color: #3a2820; }
+  .prompt-box code {
+    display: block;
+    background: #3a2820;
+    color: #f5d579;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin-top: 8px;
+    white-space: pre-wrap;
+  }
+
+  /* ===== 푸터 ===== */
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px;
+    font-size: 0.82rem;
+    color: #8a6532;
+  }
+  footer a {
+    color: #c8552d;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; }
+    header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <h1>아를의 방 — 이미지 제작 가이드</h1>
+  <div class="sub">미술 방탈출 시리즈 #1 · 더미를 교체할 일러스트 명세</div>
+  <div class="total">총 18장</div>
+</header>
+
+<!-- ============================== -->
+<!-- TIER 1: 뷰 배경 -->
+<!-- ============================== -->
+<section>
+  <h2><span class="badge tier-1">1순위</span> 뷰 배경 (3장)</h2>
+  <p class="desc">방의 세 면. 가구는 따로 얹을 거라 <strong>가구 없이 빈 방</strong>으로. 같은 방 다른 각도라 톤은 비슷하게.</p>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="sample-area"><div class="s-bg s-bg-front"></div></div>
+      <h3>정면 벽 (침대쪽)</h3>
+      <div class="filename">bg_front.png</div>
+      <div class="meta">
+        <span class="tag">1100 × 687</span>
+        <span class="tag solid">불투명 (JPG/PNG)</span>
+      </div>
+      <p class="note">노란 벽 + 붉은 바닥. 게임에서 가장 자주 보이는 화면. 빈센트 침실의 정면 뷰.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-bg s-bg-right"></div></div>
+      <h3>오른쪽 벽 (작업 공간)</h3>
+      <div class="filename">bg_right.png</div>
+      <div class="meta">
+        <span class="tag">1100 × 687</span>
+        <span class="tag solid">불투명</span>
+      </div>
+      <p class="note">탁자·의자가 놓일 곳. 같은 톤이지만 살짝 다른 빛 (창문 옆이라 더 밝게).</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-bg s-bg-left"></div></div>
+      <h3>왼쪽 벽 (출구쪽)</h3>
+      <div class="filename">bg_left.png</div>
+      <div class="meta">
+        <span class="tag">1100 × 687</span>
+        <span class="tag solid">불투명</span>
+      </div>
+      <p class="note">문이 있는 벽. 약간 어둡고 무거운 분위기.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- TIER 2: 가구·소품 -->
+<!-- ============================== -->
+<section>
+  <h2><span class="badge tier-2">2순위</span> 가구·소품 (9장)</h2>
+  <p class="desc">배경 위에 얹는 가구. <strong>모두 투명 배경 PNG</strong>로! 사이즈는 게임 화면 비율 기준이지만 더 크게 그려도 OK (축소됨).</p>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="sample-area"><div class="s-bed"></div></div>
+      <h3>침대</h3>
+      <div class="filename">bed.png</div>
+      <div class="meta">
+        <span class="tag">320 × 220</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">고흐 그림 그대로 — 빨간 시트, 하얀 베개 두 개, 갈색 나무 프레임.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-window"></div></div>
+      <h3>창문</h3>
+      <div class="filename">window.png</div>
+      <div class="meta">
+        <span class="tag">180 × 280</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">흰 창틀, 안쪽은 낮의 푸른 하늘 또는 막혀있는 느낌. (밤하늘은 줌인용 따로)</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-table"></div></div>
+      <h3>탁자</h3>
+      <div class="filename">table.png</div>
+      <div class="meta">
+        <span class="tag">280 × 240</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">갈색 나무 탁자. 위에 <strong>편지 한 장 + 잉크병</strong> 포함해서 그려도 좋고, 빈 탁자만 그려도 OK.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-chair"></div></div>
+      <h3>빈센트의 의자</h3>
+      <div class="filename">chair_vincent.png</div>
+      <div class="meta">
+        <span class="tag">130 × 280</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">빈센트의 「의자」 그림 모티브. 짚으로 짠 좌면, 소박한 시골 나무 의자.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-chair s-chair-dark"></div></div>
+      <h3>고갱의 의자</h3>
+      <div class="filename">chair_gauguin.png</div>
+      <div class="meta">
+        <span class="tag">130 × 280</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">빈센트 의자보다 어둡고 무거운 안락의자 느낌. 빈센트의 「고갱의 의자」 모티브.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-mirror"></div></div>
+      <h3>거울</h3>
+      <div class="filename">mirror.png</div>
+      <div class="meta">
+        <span class="tag">130 × 200</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">갈색 나무 액자, 타원형. 거울 표면은 살짝 흐릿하게 (나중에 빈센트 잔상 효과 얹음).</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-coatrack"><div class="coat"></div></div></div>
+      <h3>옷걸이 + 외투</h3>
+      <div class="filename">coatrack.png</div>
+      <div class="meta">
+        <span class="tag">150 × 380</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">나무 옷걸이에 짙은 파란 외투가 걸려있는 모습.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-door"></div></div>
+      <h3>문</h3>
+      <div class="filename">door.png</div>
+      <div class="meta">
+        <span class="tag">220 × 460</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">갈색 나무 문, 동그란 황동 손잡이. 고흐 그림 속 문처럼 아래는 짙고 위는 밝게. <strong>편지를 완성하면 문이 따뜻하게 빛나는 효과</strong>가 코드로 얹히니 문 자체는 닫힌 상태로.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-single-shoe"></div></div>
+      <h3>신발 한 짝 (게임 아이템)</h3>
+      <div class="filename">shoe_single.png</div>
+      <div class="meta">
+        <span class="tag">120 × 60</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">낡은 가죽 구두 <strong>한 짝</strong>. 침대 두 번째 클릭 시 이불 속에서 드러나고, 줍기·들기·신발 그림 아래에 놓기에 모두 재활용됨. 「구두 한 켤레」(1886)의 어두운 갈색 톤. 살짝 비스듬히 누운 형태.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- TIER 3: 그림 4장 -->
+<!-- ============================== -->
+<section>
+  <h2><span class="badge tier-3">3순위</span> 벽에 걸린 그림 (4장)</h2>
+  <p class="desc">고흐의 진짜 작품을 일러스트화한 버전. 액자까지 포함해서 그려줘. <strong>줌인 모달도 같은 그림이 큰 사이즈로 사용</strong>되니까 가능하면 큰 해상도로 만들고 작은 사이즈는 축소판 사용.</p>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="sample-area"><div class="s-portrait"></div></div>
+      <h3>자화상 (귀에 붕대)</h3>
+      <div class="filename">painting_portrait.png</div>
+      <div class="meta">
+        <span class="tag">방용 130×220</span>
+        <span class="tag">줌용 360×440</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">「귀에 붕대를 한 자화상」 (1889) 모티브. <strong>오른쪽 귀에 흰 붕대</strong>가 잘 보이게! 줌인하면 붕대에 작은 숫자 '37'이 보이는 단서가 있음.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-sunflowers"></div></div>
+      <h3>해바라기</h3>
+      <div class="filename">painting_sunflowers.png</div>
+      <div class="meta">
+        <span class="tag">방용 170×200</span>
+        <span class="tag">줌용 400×400</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">「해바라기」(1888) 모티브. 노란 배경 + <strong>11송이 해바라기</strong>가 화병에. 클릭해서 세는 게임 요소라 송이가 명확히 구분되어야 함.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-landscape"></div></div>
+      <h3>풍경화 (밀밭+까마귀)</h3>
+      <div class="filename">painting_landscape.png</div>
+      <div class="meta">
+        <span class="tag">방용 170×200</span>
+        <span class="tag">줌용 480×320</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">아를의 밀밭 풍경. 위쪽은 푸른 하늘, 아래는 노란 밀밭. <strong>까마귀 한 마리</strong>가 작게 날고 있음 (이스터에그용).</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-shoes"></div></div>
+      <h3>신발 그림</h3>
+      <div class="filename">painting_shoes.png</div>
+      <div class="meta">
+        <span class="tag">200 × 220</span>
+        <span class="tag transparent">투명 PNG</span>
+      </div>
+      <p class="note">「구두 한 켤레」(1886) 모티브. 어두운 배경에 낡은 가죽 구두 한 켤레. 빈센트가 걸어온 길의 상징.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- TIER 4: 줌인·엔딩 -->
+<!-- ============================== -->
+<section>
+  <h2><span class="badge tier-4">4순위</span> 특수 배경 (2장, 선택)</h2>
+  <p class="desc">없어도 게임은 돌아가지만 있으면 분위기가 확 살아남.</p>
+
+  <div class="card-grid">
+    <article class="card">
+      <div class="sample-area"><div class="s-starry"></div></div>
+      <h3>별이 빛나는 밤</h3>
+      <div class="filename">starry_night.png</div>
+      <div class="meta">
+        <span class="tag">500 × 400</span>
+        <span class="tag solid">불투명</span>
+      </div>
+      <p class="note">창문 클릭 시 줌인 배경. 별 11개는 코드로 따로 얹을 거라 <strong>밤하늘 + 달</strong>만. 「별이 빛나는 밤」(1889)의 소용돌이 감성으로.</p>
+    </article>
+
+    <article class="card">
+      <div class="sample-area"><div class="s-wheatfield"></div></div>
+      <h3>까마귀 나는 밀밭</h3>
+      <div class="filename">wheatfield_crows.png</div>
+      <div class="meta">
+        <span class="tag">1100 × 687</span>
+        <span class="tag solid">불투명</span>
+      </div>
+      <p class="note">엔딩 배경. 「까마귀가 나는 밀밭」(1890) 모티브. 위는 어두운 푸른 하늘, 아래는 노란 밀밭, 까마귀 떼. 빈센트의 마지막 작품.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- 파일명 한눈에 -->
+<!-- ============================== -->
+<section>
+  <h2>📋 파일명 한눈에 보기</h2>
+  <p class="desc">이 이름 그대로 저장하면 코드에서 바로 연결 가능. 폴더 위치: <code>미술방탈출_시리즈/images/01_아를의방/</code></p>
+
+  <div class="filenames-box">
+<span class="comment"># 1순위 — 뷰 배경</span>
+<span class="num">01</span>bg_front.png            <span class="comment">// 1100×687</span>
+<span class="num">02</span>bg_right.png            <span class="comment">// 1100×687</span>
+<span class="num">03</span>bg_left.png             <span class="comment">// 1100×687</span>
+
+<span class="comment"># 2순위 — 가구·소품 (투명 PNG)</span>
+<span class="num">04</span>bed.png                 <span class="comment">// 320×220</span>
+<span class="num">05</span>window.png              <span class="comment">// 180×280</span>
+<span class="num">06</span>table.png               <span class="comment">// 280×240</span>
+<span class="num">07</span>chair_vincent.png       <span class="comment">// 130×280</span>
+<span class="num">08</span>chair_gauguin.png       <span class="comment">// 130×280</span>
+<span class="num">09</span>mirror.png              <span class="comment">// 130×200</span>
+<span class="num">10</span>coatrack.png            <span class="comment">// 150×380</span>
+<span class="num">11</span>door.png                <span class="comment">// 220×460</span>
+<span class="num">12</span>shoe_single.png         <span class="comment">// 120×60  (게임 아이템 — 침대→인벤→그림 재활용)</span>
+
+<span class="comment"># 3순위 — 벽 그림 4장 (투명 PNG, 큰 해상도 권장)</span>
+<span class="num">13</span>painting_portrait.png   <span class="comment">// 360×440 (줌용)</span>
+<span class="num">14</span>painting_sunflowers.png <span class="comment">// 400×400 (줌용)</span>
+<span class="num">15</span>painting_landscape.png  <span class="comment">// 480×320 (줌용)</span>
+<span class="num">16</span>painting_shoes.png      <span class="comment">// 200×220</span>
+
+<span class="comment"># 4순위 — 특수 배경 (선택)</span>
+<span class="num">17</span>starry_night.png        <span class="comment">// 500×400</span>
+<span class="num">18</span>wheatfield_crows.png    <span class="comment">// 1100×687</span>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- AI 프롬프트 가이드 -->
+<!-- ============================== -->
+<section>
+  <h2>🤖 AI 이미지 프롬프트 (시작점)</h2>
+  <p class="desc">전체 일관성을 위해 모든 이미지에 같은 스타일 키워드를 붙여줘.</p>
+
+  <div class="prompt-box">
+    <h3>공통 스타일 키워드 (매번 붙이기)</h3>
+    <p>모든 이미지 프롬프트 끝에 이걸 추가하면 톤이 통일돼:</p>
+    <code>soft digital illustration, Van Gogh palette (mustard yellow, deep blue, terracotta red), warm light, simple flat shapes, slight brush texture, point-and-click adventure game asset, clean lines</code>
+  </div>
+
+  <div class="prompt-box">
+    <h3>예시: 침대 (bed.png)</h3>
+    <code>A simple wooden bed with red blanket and white pillows, Van Gogh's bedroom in Arles style, transparent background, soft digital illustration, warm yellow palette, point-and-click adventure game asset</code>
+  </div>
+
+  <div class="prompt-box">
+    <h3>예시: 자화상 (painting_portrait.png)</h3>
+    <code>Van Gogh self-portrait with bandaged ear, simplified illustration version, framed painting, transparent background, soft brushwork, warm orange and turquoise tones, game asset style</code>
+  </div>
+
+  <div class="prompt-box">
+    <h3>예시: 별이 빛나는 밤 (starry_night.png)</h3>
+    <code>Night sky with crescent moon, swirling brushstrokes inspired by Van Gogh's Starry Night, deep blue and warm yellow, no stars (will be added separately), simple background for game zoom view, 500x400</code>
+  </div>
+</section>
+
+<footer>
+  💡 이 가이드 페이지를 보면서 이미지 만들고, 다 모이면 <a href="01_아를의방.html">01_아를의방.html</a>에 한 번에 교체하면 돼!<br>
+  미술 방탈출 시리즈 #1 — 이미지 제작 가이드
+</footer>
+
+</div>
+
+</body>
+</html>

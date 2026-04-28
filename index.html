@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미술 방탈출 시리즈</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gaegu:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: 'Gowun Dodum', sans-serif;
+    background:
+      radial-gradient(circle at 15% 12%, #ffe4c4 0%, transparent 35%),
+      radial-gradient(circle at 85% 18%, #d6f0e6 0%, transparent 35%),
+      radial-gradient(circle at 75% 85%, #fde4ec 0%, transparent 40%),
+      radial-gradient(circle at 20% 80%, #fff4cc 0%, transparent 35%),
+      #fff9ef;
+    min-height: 100vh;
+    color: #4a3828;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* 떠다니는 작은 점 데코 (배경 위) */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 8% 22%, #ffc4c4, transparent),
+      radial-gradient(2px 2px at 18% 70%, #c4e4d4, transparent),
+      radial-gradient(2px 2px at 32% 38%, #ffd47a, transparent),
+      radial-gradient(2px 2px at 55% 80%, #ffc4dc, transparent),
+      radial-gradient(2px 2px at 72% 32%, #b4dcec, transparent),
+      radial-gradient(2px 2px at 90% 65%, #ffd47a, transparent),
+      radial-gradient(2px 2px at 45% 12%, #c4e4d4, transparent),
+      radial-gradient(2px 2px at 88% 88%, #ffc4dc, transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 20px 70px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== 헤더 ===== */
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding: 36px 20px 28px;
+    position: relative;
+  }
+  header .top-emojis {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    letter-spacing: 8px;
+  }
+  header h1 {
+    font-family: 'Jua', sans-serif;
+    font-size: 3rem;
+    color: #5a3a1a;
+    margin-bottom: 6px;
+    letter-spacing: 3px;
+    text-shadow:
+      3px 3px 0 #fff4cc,
+      6px 6px 0 rgba(255,180,140,0.4);
+  }
+  header .subtitle {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.25rem;
+    color: #b85838;
+    font-weight: 700;
+  }
+  header .author {
+    margin-top: 14px;
+    font-family: 'Gaegu', cursive;
+    font-size: 1.05rem;
+    color: #6a4828;
+  }
+  header .author b {
+    background: #fff4cc;
+    padding: 1px 10px;
+    border-radius: 12px;
+    color: #5a3a1a;
+    box-shadow: 0 2px 0 #ffd47a;
+    display: inline-block;
+    transform: rotate(-1deg);
+  }
+
+  /* ===== 안내 박스 — 포스트잇 느낌 ===== */
+  .notice {
+    background: #fff8d8;
+    border: 2px dashed #ffb878;
+    border-radius: 14px;
+    padding: 20px 26px;
+    margin-bottom: 18px;
+    box-shadow: 4px 4px 0 rgba(255,184,120,0.25);
+    position: relative;
+    transform: rotate(-0.4deg);
+  }
+  .notice::before {
+    content: '📌';
+    position: absolute;
+    top: -14px; left: 24px;
+    font-size: 1.5rem;
+    transform: rotate(-12deg);
+  }
+  .notice h3 {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.15rem;
+    color: #b85838;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .notice p {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 0.95rem;
+    color: #4a3828;
+    margin-bottom: 4px;
+  }
+  .notice p b {
+    color: #b85838;
+    background: rgba(255,228,196,0.6);
+    padding: 0 4px;
+    border-radius: 4px;
+  }
+
+  /* ===== 게임 방법 — 메모 카드 ===== */
+  .how-to {
+    background: #f0fbe8;
+    border: 2px solid #b8d8a8;
+    border-radius: 16px;
+    padding: 22px 26px;
+    margin-bottom: 44px;
+    box-shadow: 4px 4px 0 rgba(184,216,168,0.4);
+    position: relative;
+    transform: rotate(0.3deg);
+  }
+  .how-to::before {
+    content: '🎨';
+    position: absolute;
+    top: -16px; right: 28px;
+    font-size: 1.8rem;
+    background: white;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0 rgba(184,216,168,0.5);
+  }
+  .how-to h3 {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.2rem;
+    color: #4a7838;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .how-to ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px 20px;
+  }
+  .how-to li {
+    font-size: 0.92rem;
+    color: #3a3828;
+    padding: 5px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .how-to li .icon {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    width: 28px;
+    text-align: center;
+  }
+  .how-to li b {
+    color: #4a7838;
+    background: rgba(184,216,168,0.3);
+    padding: 0 5px;
+    border-radius: 4px;
+  }
+
+  /* ===== 시리즈 섹션 ===== */
+  .series-section h2 {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.8rem;
+    color: #5a3a1a;
+    margin-bottom: 26px;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+  .series-section h2 .deco-emoji {
+    display: inline-block;
+    font-size: 1.4rem;
+    margin: 0 12px;
+    transform: translateY(-3px);
+  }
+
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 22px;
+  }
+
+  /* ===== 게임 카드 — 스티커 느낌 ===== */
+  .game-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 6px 0 rgba(0,0,0,0.08),
+      0 12px 24px rgba(184,88,56,0.12);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 2.5px solid #fff;
+  }
+  .game-card:nth-child(1) { transform: rotate(-0.6deg); }
+  .game-card:nth-child(2) { transform: rotate(0.4deg); }
+  .game-card:nth-child(3) { transform: rotate(-0.3deg); }
+  .game-card:hover {
+    transform: translateY(-8px) rotate(0deg) !important;
+    box-shadow:
+      0 10px 0 rgba(0,0,0,0.08),
+      0 20px 32px rgba(184,88,56,0.22);
+  }
+
+  /* 카드 미리보기 */
+  .card-preview {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-preview .num {
+    position: absolute;
+    top: 12px; left: 14px;
+    font-family: 'Jua', sans-serif;
+    font-size: 0.95rem;
+    color: white;
+    background: rgba(74,40,24,0.85);
+    padding: 3px 12px;
+    border-radius: 20px;
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  .card-preview .badge-status {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: white;
+    color: #b85838;
+    font-family: 'Jua', sans-serif;
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    z-index: 5;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+  .card-preview .badge-status.coming {
+    background: #d8d0c0;
+    color: #6a5848;
+  }
+
+  /* 1편 미리보기 — 아를의 방 */
+  .preview-arles {
+    background:
+      linear-gradient(180deg, #ffd870 0%, #ffd870 60%, #d4988a 60%, #b07d75 100%);
+  }
+  .preview-arles::before {
+    /* 침대 */
+    content: '';
+    position: absolute;
+    bottom: 18%; left: 12%;
+    width: 38%; height: 30%;
+    background: linear-gradient(180deg, #d8553d 0%, #8a3520 100%);
+    border: 2.5px solid #5a2818;
+    border-radius: 6px;
+  }
+  .preview-arles::after {
+    /* 해바라기 액자 */
+    content: '✿';
+    position: absolute;
+    top: 22%; right: 18%;
+    width: 56px; height: 56px;
+    background: linear-gradient(180deg, #d4a548 0%, #b88838 100%);
+    border: 3px solid #5a3818;
+    border-radius: 8px;
+    color: #6a5828;
+    font-size: 1.7rem;
+    text-align: center;
+    line-height: 56px;
+  }
+
+  /* 2편 미리보기 — 비해당 */
+  .preview-bihaedang {
+    background:
+      radial-gradient(circle at 30% 80%, rgba(245,200,192,0.6), transparent 60%),
+      linear-gradient(180deg, #f5e8d0 0%, #ede0c0 60%, #6a4828 60%, #4a2810 100%);
+  }
+  .preview-bihaedang::before {
+    /* 매화 */
+    content: '✿  ✿  ✿';
+    position: absolute;
+    top: 20%; left: 0; right: 0;
+    text-align: center;
+    color: #f5a8a8;
+    font-size: 1.5rem;
+    letter-spacing: 10px;
+  }
+  .preview-bihaedang::after {
+    /* 자단목 함 */
+    content: '';
+    position: absolute;
+    bottom: 18%; left: 50%;
+    transform: translateX(-50%);
+    width: 32%; height: 26%;
+    background: linear-gradient(180deg, #5a3018 0%, #3a1808 100%);
+    border: 2.5px solid #1a0805;
+    border-radius: 6px;
+  }
+  .preview-bihaedang .hanja {
+    position: absolute;
+    bottom: 25%; left: 50%;
+    transform: translateX(-50%);
+    color: #ffd47a;
+    font-family: 'Jua', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 4px;
+    z-index: 4;
+  }
+
+  /* 3편 미리보기 — 다음 편 */
+  .preview-next {
+    background: linear-gradient(135deg, #e0d8c8 0%, #b8a898 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .preview-next::before {
+    content: '✨';
+    font-size: 2.2rem;
+    animation: twinkle 2s ease-in-out infinite alternate;
+  }
+  .preview-next::after {
+    content: 'COMING SOON';
+    font-family: 'Jua', sans-serif;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  @keyframes twinkle {
+    from { transform: scale(1) rotate(-10deg); opacity: 0.7; }
+    to   { transform: scale(1.15) rotate(10deg); opacity: 1; }
+  }
+
+  /* 카드 본문 */
+  .card-body {
+    padding: 20px 22px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-body h3 {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.5rem;
+    color: #4a2818;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+  }
+  .card-body .subname {
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    color: #b85838;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .card-body .desc {
+    font-size: 0.88rem;
+    color: #4a3828;
+    line-height: 1.65;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .card-body .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+  .card-body .tags .tag {
+    background: #fff4cc;
+    color: #7a4828;
+    border: 1.5px solid #ffd47a;
+    border-radius: 14px;
+    padding: 3px 10px;
+    font-size: 0.74rem;
+    font-weight: 600;
+  }
+  .card-body .tags .tag.green {
+    background: #e0f0d8;
+    border-color: #a8c898;
+    color: #4a7838;
+  }
+  .card-body .tags .tag.pink {
+    background: #ffe0e8;
+    border-color: #f5b8c4;
+    color: #b85878;
+  }
+
+  .card-body .play-btn {
+    display: block;
+    background: linear-gradient(180deg, #ff8a5c 0%, #d85838 100%);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-family: 'Jua', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    transition: all 0.2s;
+    box-shadow:
+      0 4px 0 #a83820,
+      0 6px 12px rgba(168,56,32,0.25);
+  }
+  .card-body .play-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 0 #a83820,
+      0 10px 16px rgba(168,56,32,0.35);
+  }
+  .card-body .play-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #a83820;
+  }
+  .card-body .play-btn.disabled {
+    background: linear-gradient(180deg, #b8a898 0%, #8a7868 100%);
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: 0 4px 0 #6a5848;
+  }
+  .card-body .play-btn.guide {
+    background: white;
+    color: #b85838;
+    border: 2px solid #ffd47a;
+    margin-top: 8px;
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+    padding: 9px 16px;
+    box-shadow: 0 3px 0 #ffd47a;
+  }
+  .card-body .play-btn.guide:hover {
+    background: #fff4cc;
+    box-shadow: 0 5px 0 #ffd47a;
+  }
+  .card-body .play-btn.guide:active {
+    box-shadow: 0 1px 0 #ffd47a;
+  }
+
+  /* ===== 푸터 ===== */
+  footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 24px 20px;
+    font-family: 'Gaegu', cursive;
+    font-size: 1rem;
+    color: #886532;
+    line-height: 1.8;
+  }
+  footer .heart {
+    color: #d85838;
+    font-size: 1.1rem;
+    display: inline-block;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 24px 14px 50px; }
+    header h1 { font-size: 2rem; }
+    header .subtitle { font-size: 1rem; }
+    .how-to ul { grid-template-columns: 1fr; }
+    .game-card { transform: rotate(0deg) !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="top-emojis">🎨 ✿ 🖼️ ✿ 🌸</div>
+  <h1>미술 방탈출</h1>
+  <div class="subtitle">~ 작품 속으로 들어가는 시간 ~</div>
+  <div class="author">
+    <b>혜화여자고등학교 미술과</b>가 만드는 작은 게임들
+  </div>
+</header>
+
+<!-- ===== 안내 박스 ===== -->
+<div class="notice">
+  <h3>선생님들께 살짝 안내드려요!</h3>
+  <p>이 시리즈는 학생들과 함께 <b>작가·작품을 한 번 더 들여다보기 위해</b> 만들었어요.</p>
+  <p>지금 화면에 보이는 그림들은 <b>CSS로 그린 임시 더미</b>예요. 추후 일러스트 이미지로 차근차근 교체될 예정이랍니다 🎨</p>
+</div>
+
+<!-- ===== 게임 방법 ===== -->
+<div class="how-to">
+  <h3>플레이 방법</h3>
+  <ul>
+    <li><span class="icon">🖱️</span><span><b>클릭</b>으로 사물을 살펴보고 단서를 찾아요</span></li>
+    <li><span class="icon">⬅️➡️</span><span>화면 양옆 화살표 또는 <b>← →</b> 키로 시점 회전</span></li>
+    <li><span class="icon">🎒</span><span>발견한 아이템은 화면 하단 <b>인벤토리</b>에 모여요</span></li>
+    <li><span class="icon">✋</span><span>아이템을 클릭하면 <b>들고 다른 사물에 사용</b> 가능!</span></li>
+    <li><span class="icon">💡</span><span>막혔을 땐 우상단 <b>힌트</b> 버튼을 눌러요</span></li>
+    <li><span class="icon">⎋</span><span>줌인 화면은 <b>ESC</b>나 ✕로 닫아요</span></li>
+    <li><span class="icon">🌸</span><span>이스터에그를 찾으면 <b>엔딩이 달라져요!</b> 천천히 둘러보세요</span></li>
+  </ul>
+</div>
+
+<!-- ===== 시리즈 카드 ===== -->
+<section class="series-section">
+  <h2><span class="deco-emoji">✿</span>시리즈<span class="deco-emoji">✿</span></h2>
+
+  <div class="series-grid">
+
+    <!-- 1편: 아를의 방 -->
+    <article class="game-card">
+      <div class="card-preview preview-arles">
+        <div class="num">No. 01</div>
+        <div class="badge-status">PLAY!</div>
+      </div>
+      <div class="card-body">
+        <h3>아를의 방</h3>
+        <div class="subname">~ The Room in Arles ~</div>
+        <p class="desc">1888년 프랑스 아를. 빈센트가 동생에게 보내려 했던 미완성의 편지를 대신 완성하고, 노란 방을 떠나야 해요. 해바라기·자화상·별이 빛나는 밤이 단서로 얽혀있어요!</p>
+        <div class="tags">
+          <span class="tag">🌻 고흐</span>
+          <span class="tag green">3-뷰 회전</span>
+          <span class="tag pink">엔딩 4분기</span>
+        </div>
+        <a href="01_아를의방.html" class="play-btn">▶ 플레이하기</a>
+        <a href="02_이미지가이드.html" class="play-btn guide">이미지 가이드</a>
+      </div>
+    </article>
+
+    <!-- 2편: 비해당 -->
+    <article class="game-card">
+      <div class="card-preview preview-bihaedang">
+        <div class="num">No. 02</div>
+        <div class="badge-status">PLAY!</div>
+        <div class="hanja">夢遊桃源</div>
+      </div>
+      <div class="card-body">
+        <h3>비해당</h3>
+        <div class="subname">~ 안평·안견·박팽년의 꿈 ~</div>
+        <p class="desc">계유의 화가 지나간 뒤, 안평대군의 별당 비해당. 그가 사랑한 시집·거문고·자단목 함, 그리고 안견이 사흘 만에 그렸다는 「몽유도원도」가 아직 그 안에 있어요. 두루마리 속 꿈을 따라 들어가 시구를 완성하면…</p>
+        <div class="tags">
+          <span class="tag">🍑 안견·안평</span>
+          <span class="tag green">두 챕터·6뷰</span>
+          <span class="tag pink">엔딩 4분기</span>
+        </div>
+        <a href="02_비해당.html" class="play-btn">▶ 플레이하기</a>
+        <a href="02_비해당_이미지가이드.html" class="play-btn guide">이미지 가이드</a>
+      </div>
+    </article>
+
+    <!-- 다음 편 -->
+    <article class="game-card">
+      <div class="card-preview preview-next">
+        <div class="num">No. 03</div>
+        <div class="badge-status coming">준비중</div>
+      </div>
+      <div class="card-body">
+        <h3>다음 작품</h3>
+        <div class="subname">~ 기획 중이에요! ~</div>
+        <p class="desc">베르메르의 화실, 클림트의 키스, 마그리트의 방… 다음 편을 함께 고민하고 있어요. 추천하고 싶은 작가나 작품이 있다면 살짝 알려주세요!</p>
+        <div class="tags">
+          <span class="tag">🤔 기획 중</span>
+        </div>
+        <a href="#" class="play-btn disabled">곧 만나요!</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <span class="heart">♥</span> 학생들이 작품 앞에서 한 번 더 멈춰 서기를 바라며 <span class="heart">♥</span><br>
+  · 미술 방탈출 시리즈 · 혜화여자고등학교 미술과 ·
+</footer>
+
+</div>
+
+</body>
+</html>
