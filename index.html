@@ -218,6 +218,15 @@
     border: 1px solid #d8c8a8;
   }
 
+  /* 1편 — 빈센트 3부작: 갈색 → 노랑 → 파랑 세 방 */
+  .preview-vincent {
+    background: linear-gradient(90deg, #6a4a2e 0 33.3%, #f5d579 33.3% 66.6%, #34497a 66.6% 100%);
+  }
+  .preview-vincent::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+    background: linear-gradient(90deg, #3a2a1c 0 33.3%, #b07d75 33.3% 66.6%, #8a4a38 66.6% 100%);
+  }
   /* 1편 — 아를의 방 */
   .preview-arles {
     background: linear-gradient(180deg, #f5d579 0%, #f5d579 60%, #c4928a 60%, #b07d75 100%);
@@ -443,23 +452,22 @@
 
   <div class="series-grid">
 
-    <!-- 1편: 아를의 방 -->
+    <!-- 1편: 빈센트 3부작 (아를의 방을 가운데 두고 앞뒤 두 방을 더함) -->
     <article class="game-card">
-      <div class="card-preview preview-arles">
+      <div class="card-preview preview-vincent">
         <div class="num">No. 01</div>
         <div class="badge play">PLAY</div>
       </div>
       <div class="card-body">
-        <h3>아를의 방</h3>
-        <div class="subname">The Room in Arles</div>
-        <p class="desc">1888년 프랑스 아를. 빈센트가 동생에게 보내려 했던 미완성의 편지를 대신 완성하고 노란 방을 떠나야 한다.</p>
+        <h3>빈센트 3부작</h3>
+        <div class="subname">Three Rooms of Vincent</div>
+        <p class="desc">누에넨의 작업실 → 아를의 방 → 생레미의 창. 빈센트 반 고흐가 머물렀던 세 개의 방을 차례로 탈출합니다. 앞 방의 선택이 다음 방에 반영됩니다.</p>
         <div class="tags">
           <span class="tag">🌻 고흐</span>
-          <span class="tag green">3-뷰</span>
-          <span class="tag pink">엔딩 4분기</span>
+          <span class="tag green">방 3개</span>
+          <span class="tag pink">방마다 엔딩 4분기</span>
         </div>
-        <a href="https://miynuees.github.io/arles-room/" class="play-btn" target="_blank">▶ 플레이</a>
-        <a href="https://miynuees.github.io/arles-room/image_guide.html" class="play-btn guide" target="_blank">이미지 가이드</a>
+        <a href="https://miynuees.github.io/vincent-trilogy/" class="play-btn" target="_blank">▶ 플레이</a>
       </div>
     </article>
 
